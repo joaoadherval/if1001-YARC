@@ -1,6 +1,8 @@
 ## Projeto para a cadeira IF1001 - Programação 3
 ### Programação para Dispositivos Móveis com Android - Centro de Informática - UFPE
-#### Disciplina ministrada pelo professor Leopoldo Mota Teixeira (lmt@cin.ufpe.br)
+Disciplina ministrada pelo professor Leopoldo Mota Teixeira (lmt@cin.ufpe.br)
+
+#### O Projeto
 
 Esse projeto visa aplicar os conhecimentos adquiridos em sala de aula, na implementação de um cliente para o Reddit. A plataforma é um local amplamente usado por jovens e adultos mundo afora, para espalhar conhecimento, opniões, notícias, entre outras coisas. Formatado em threads, onde múltiplus usuários engajam numa mesma publicação (ou post). 
 
@@ -11,3 +13,7 @@ Existem alguns aplicativos pelas lojas virtuais que já fazem isso, porém o obj
 A intenção é ter uma tela de autenticação (login), uma tela principal com os itens (posts) mais atuais, cada um com uma breve descrição (ou início do conteúdo), imagem se existir, número de replies, avaliações, etc; um campo de busca, uma tela de settings, e filtros.
 
 Por: João Adherval Carvalho de Barros (jacb@cin.ufpe.br)
+
+#### Telas iniciais
+
+As telas iniciais de login e principal estão dentro do repósitório.
