@@ -2,7 +2,7 @@
 ### Programação para Dispositivos Móveis com Android - Centro de Informática - UFPE
 Disciplina ministrada pelo professor Leopoldo Mota Teixeira (lmt@cin.ufpe.br)
 
-#### O Projeto
+#### O Projeto - YARC (Yet Another Reddit Client)
 
 Esse projeto visa aplicar os conhecimentos adquiridos em sala de aula, na implementação de um cliente para o Reddit. A plataforma é um local amplamente usado por jovens e adultos mundo afora, para espalhar conhecimento, opniões, notícias, entre outras coisas. Formatado em threads, onde múltiplus usuários engajam numa mesma publicação (ou post). 
 
