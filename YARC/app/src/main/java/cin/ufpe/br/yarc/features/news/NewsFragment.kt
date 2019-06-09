@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import cin.ufpe.br.yarc.R
+import cin.ufpe.br.yarc.commons.NewsItem
 import cin.ufpe.br.yarc.commons.extensions.inflate
 import cin.ufpe.br.yarc.features.news.adapter.NewsAdapter
 import kotlinx.android.synthetic.main.news_fragment.*
@@ -23,7 +24,15 @@ class NewsFragment : Fragment() {
         news_list.setHasFixedSize(true)
         news_list.layoutManager = LinearLayoutManager(context)
 
+        initAdapter()
 
+        if (savedInstanceState == null) {
+            val news = mutableListOf<NewsItem>()
+            for (i in 1..10) {
+                news.add(NewsItem("author$i", "Title $i", i, 1457207701L - i * 200, "http://lorempixel.com/200/200/technics/$i", "url"))
+            }
+            (news_list.adapter as NewsAdapter).addNews(news)
+        }
     }
 
     private fun initAdapter() {
