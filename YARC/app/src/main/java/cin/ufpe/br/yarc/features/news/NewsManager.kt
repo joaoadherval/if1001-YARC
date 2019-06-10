@@ -1,18 +1,26 @@
 package cin.ufpe.br.yarc.features.news
 
+import cin.ufpe.br.yarc.api.RestAPI
 import cin.ufpe.br.yarc.commons.NewsItem
 import rx.Observable
 
-class NewsManager {
-    fun getNews(): Observable<List<NewsItem>> {
+class NewsManager(private val api: RestAPI = RestAPI()) {
+    fun getNews(limit: String = "10"): Observable<List<NewsItem>> {
         return Observable.create {
                 subscriber ->
+                val callResponse = api.getNews("", limit)
+                val response = callResponse.execute()
 
-            val news = mutableListOf<NewsItem>()
-            for (i in 1..10) {
-                news.add(NewsItem("author$i","Title $i", i, 1457207701L - i * 200, "http://lorempixel.com/200/200/technics/$i", "url"))
-            }
-            subscriber.onNext(news)
+                if(response.isSuccessful) {
+                    val news = response.body().data.children.map {
+                        val item = it.data
+                        NewsItem(item.author, item.title, item.num_comments, item.created, item.thumbnail, item.url)
+                    }
+                    subscriber.onNext(news)
+                    subscriber.onCompleted()
+                } else {
+                    subscriber.onError(Throwable(response.message()))
+                }
         }
     }
 }
