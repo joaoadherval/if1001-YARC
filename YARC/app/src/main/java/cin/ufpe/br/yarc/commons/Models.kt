@@ -3,7 +3,13 @@ package cin.ufpe.br.yarc.commons
 import cin.ufpe.br.yarc.commons.adapter.AdapterConstants
 import cin.ufpe.br.yarc.commons.adapter.ViewType
 
-data class NewsItem(
+data class RedditNews(
+    val after: String,
+    val before: String,
+    val news: List<RedditNewsItem>
+)
+
+data class RedditNewsItem(
     val author: String,
     val title: String,
     val numComments: Int,

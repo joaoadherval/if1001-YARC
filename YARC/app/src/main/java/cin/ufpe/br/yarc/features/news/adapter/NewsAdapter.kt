@@ -3,7 +3,7 @@ package cin.ufpe.br.yarc.features.news.adapter
 import android.support.v4.util.SparseArrayCompat
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import cin.ufpe.br.yarc.commons.NewsItem
+import cin.ufpe.br.yarc.commons.RedditNewsItem
 import cin.ufpe.br.yarc.commons.adapter.AdapterConstants
 import cin.ufpe.br.yarc.commons.adapter.ViewType
 import cin.ufpe.br.yarc.commons.adapter.ViewTypeDelegateAdapter
@@ -40,7 +40,7 @@ class NewsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return this.items.get(position).getViewType()
     }
 
-    fun addNews(news: List<NewsItem>) {
+    fun addNews(news: List<RedditNewsItem>) {
         val initPosition = items.size - 1;
         items.addAll(initPosition, news)
         notifyItemRangeInserted(initPosition, initPosition + news.size)
@@ -48,7 +48,7 @@ class NewsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         notifyItemRangeChanged(initPosition, items.size + 1)
     }
 
-    fun clearAndAddNews(news: List<NewsItem>) {
+    fun clearAndAddNews(news: List<RedditNewsItem>) {
         items.clear()
         notifyItemRangeRemoved(0, getLastPosition())
 
@@ -57,10 +57,10 @@ class NewsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         notifyItemRangeInserted(0, items.size)
     }
 
-    fun getNews(): List<NewsItem> {
+    fun getNews(): List<RedditNewsItem> {
         return items
             .filter { it.getViewType() == AdapterConstants.NEWS }
-            .map { it as NewsItem }
+            .map { it as RedditNewsItem }
     }
 
     private fun getLastPosition() = if (items.lastIndex == -1) 0 else items.lastIndex

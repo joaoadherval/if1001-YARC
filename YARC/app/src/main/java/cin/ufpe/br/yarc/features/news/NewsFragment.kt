@@ -2,23 +2,22 @@ package cin.ufpe.br.yarc.features.news
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import cin.ufpe.br.yarc.R
-import cin.ufpe.br.yarc.commons.BaseFragment
-import cin.ufpe.br.yarc.commons.NewsItem
+import cin.ufpe.br.yarc.commons.InfiniteScrollListener
+import cin.ufpe.br.yarc.commons.RedditNews
+import cin.ufpe.br.yarc.commons.RxBaseFragment
 import cin.ufpe.br.yarc.commons.extensions.inflate
 import cin.ufpe.br.yarc.features.news.adapter.NewsAdapter
 import kotlinx.android.synthetic.main.news_fragment.*
-import rx.Scheduler
-import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 
-class NewsFragment : BaseFragment() {
+class NewsFragment : RxBaseFragment() {
 
+    private var redditNews: RedditNews? = null
     private val newsManager by lazy { NewsManager() }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -29,8 +28,10 @@ class NewsFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
 
         news_list.setHasFixedSize(true)
-        news_list.layoutManager = LinearLayoutManager(context)
-
+        val linearLayout = LinearLayoutManager(context)
+        news_list.layoutManager = linearLayout
+        news_list.clearOnScrollListeners()
+        news_list.addOnScrollListener(InfiniteScrollListener({ requestNews() }, linearLayout))
         initAdapter()
 
         if (savedInstanceState == null) {
@@ -39,10 +40,15 @@ class NewsFragment : BaseFragment() {
     }
 
     private fun requestNews() {
-        val subscription = newsManager.getNews().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
-            { retrivedNews -> (news_list.adapter as NewsAdapter).addNews(retrivedNews) },
-            { e -> Snackbar.make(news_list, e.message ?: "", Snackbar.LENGTH_LONG).show() }
-        )
+        val subscription = newsManager.getNews(redditNews?.after ?: "")
+            .subscribeOn(Schedulers.io())
+            .subscribe(
+                { retrievedNews ->
+                    redditNews = retrievedNews
+                    (news_list.adapter as NewsAdapter).addNews(retrievedNews.news)
+                },
+                { e -> Snackbar.make(news_list, e.message ?: "", Snackbar.LENGTH_LONG).show() }
+            )
         subscriptions.add(subscription)
     }
 
