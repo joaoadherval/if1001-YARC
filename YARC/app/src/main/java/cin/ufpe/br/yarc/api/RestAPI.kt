@@ -4,7 +4,7 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-class RestAPI() {
+class RestAPI() : NewsAPI {
 
     private val redditAPI: RedditAPI
 
@@ -13,7 +13,7 @@ class RestAPI() {
         redditAPI = retrofit.create(RedditAPI::class.java)
     }
 
-    fun getNews(after: String, limit: String): Call<RedditNewsResponse> {
+    override fun getNews(after: String, limit: String) : Call<RedditNewsResponse> {
         return redditAPI.getTop(after, limit)
     }
 }

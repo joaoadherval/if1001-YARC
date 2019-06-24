@@ -1,11 +1,12 @@
 package cin.ufpe.br.yarc.features.news
 
+import cin.ufpe.br.yarc.api.NewsAPI
 import cin.ufpe.br.yarc.api.RestAPI
 import cin.ufpe.br.yarc.commons.RedditNews
 import cin.ufpe.br.yarc.commons.RedditNewsItem
 import rx.Observable
 
-class NewsManager(private val api: RestAPI = RestAPI()) {
+class NewsManager(private val api: NewsAPI = RestAPI()) {
     fun getNews(after: String, limit: String = "10"): Observable<RedditNews> {
         return Observable.create {
                 subscriber ->
