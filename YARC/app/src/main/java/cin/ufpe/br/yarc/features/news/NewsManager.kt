@@ -1,12 +1,14 @@
 package cin.ufpe.br.yarc.features.news
 
 import cin.ufpe.br.yarc.api.NewsAPI
-import cin.ufpe.br.yarc.api.RestAPI
 import cin.ufpe.br.yarc.commons.RedditNews
 import cin.ufpe.br.yarc.commons.RedditNewsItem
 import rx.Observable
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class NewsManager(private val api: NewsAPI = RestAPI()) {
+@Singleton
+class NewsManager @Inject constructor(private val api: NewsAPI) {
     fun getNews(after: String, limit: String = "10"): Observable<RedditNews> {
         return Observable.create {
                 subscriber ->
