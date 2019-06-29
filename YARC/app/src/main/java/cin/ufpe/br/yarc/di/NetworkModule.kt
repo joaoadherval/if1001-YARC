@@ -1,5 +1,6 @@
 package cin.ufpe.br.yarc.di
 
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -15,6 +16,7 @@ class NetworkModule {
         return Retrofit.Builder()
             .baseUrl("https://www.reddit.com")
             .addConverterFactory(MoshiConverterFactory.create())
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build()
     }
 }

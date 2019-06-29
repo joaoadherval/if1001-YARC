@@ -5,7 +5,7 @@ import cin.ufpe.br.yarc.di.AppModule
 import cin.ufpe.br.yarc.di.news.DaggerNewsComponent
 import cin.ufpe.br.yarc.di.news.NewsComponent
 
-class App : Application() {
+class YARCApp : Application() {
 
     companion object {
         lateinit var newsComponent: NewsComponent

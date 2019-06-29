@@ -1,13 +1,16 @@
 package cin.ufpe.br.yarc.di
 
+import android.app.Application
 import android.content.Context
-import cin.ufpe.br.yarc.App
+import cin.ufpe.br.yarc.YARCApp
 import dagger.Module
 import dagger.Provides
+import kotlinx.coroutines.CommonPool
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
 
 @Module
-class AppModule(val app: App) {
+class AppModule(val app: YARCApp) {
 
     @Provides
     @Singleton
@@ -15,5 +18,8 @@ class AppModule(val app: App) {
 
     @Provides
     @Singleton
-    fun provideApplication(): App = app
+    fun provideApplication(): Application = app
+
+    @Provides
+    fun provideCoroutineContext() = Dispatchers.Default
 }

@@ -2,7 +2,6 @@ package cin.ufpe.br.yarc
 
 import cin.ufpe.br.yarc.api.*
 import cin.ufpe.br.yarc.commons.RedditNews
-import cin.ufpe.br.yarc.features.news.NewsManager
 import okhttp3.MediaType
 import okhttp3.ResponseBody
 import org.jetbrains.spek.api.Spek

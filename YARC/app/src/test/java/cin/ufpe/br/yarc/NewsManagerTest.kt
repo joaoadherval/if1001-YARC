@@ -2,13 +2,11 @@ package cin.ufpe.br.yarc
 
 import cin.ufpe.br.yarc.api.*
 import cin.ufpe.br.yarc.commons.RedditNews
-import cin.ufpe.br.yarc.features.news.NewsManager
 import okhttp3.MediaType
 import okhttp3.ResponseBody
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Matchers.anyString
-import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import retrofit2.Call
 import retrofit2.Response

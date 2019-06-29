@@ -8,9 +8,9 @@ import cin.ufpe.br.yarc.commons.adapter.AdapterConstants
 import cin.ufpe.br.yarc.commons.adapter.ViewType
 import cin.ufpe.br.yarc.commons.adapter.ViewTypeDelegateAdapter
 
-class NewsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class NewsAdapter(listener: NewsDelegateAdapter.onViewSelectedListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private lateinit var items: ArrayList<ViewType>
+    private var items: ArrayList<ViewType>
     private var delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
 
     private val loadingItem = object : ViewType {
@@ -19,7 +19,7 @@ class NewsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     init {
         delegateAdapters.put(AdapterConstants.LOADING, LoadingDelegateAdapter())
-        delegateAdapters.put(AdapterConstants.NEWS, NewsDelegateAdapter())
+        delegateAdapters.put(AdapterConstants.NEWS, NewsDelegateAdapter(listener))
         items = ArrayList()
         items.add(loadingItem)
     }
@@ -37,13 +37,14 @@ class NewsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun getItemViewType(position: Int): Int {
-        return this.items.get(position).getViewType()
+        return this.items[position].getViewType()
     }
 
     fun addNews(news: List<RedditNewsItem>) {
-        val initPosition = items.size - 1;
-        items.addAll(initPosition, news)
-        notifyItemRangeInserted(initPosition, initPosition + news.size)
+        val initPosition = items.size - 1
+        items.removeAt(initPosition)
+        notifyItemRemoved(initPosition)
+        items.addAll(news)
         items.add(loadingItem)
         notifyItemRangeChanged(initPosition, items.size + 1)
     }

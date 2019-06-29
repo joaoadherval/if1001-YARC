@@ -4,7 +4,6 @@ import android.os.Parcel
 import android.os.Parcelable
 import cin.ufpe.br.yarc.commons.adapter.AdapterConstants
 import cin.ufpe.br.yarc.commons.adapter.ViewType
-import cin.ufpe.br.yarc.commons.extensions.createParcel
 
 data class RedditNews(
     val after: String,
@@ -12,17 +11,14 @@ data class RedditNews(
     val news: List<RedditNewsItem>) : Parcelable {
 
     companion object {
-        @JvmField @Suppress("unused")
-        val CREATOR = createParcel { RedditNews(it) }
+        @Suppress("unused")
+        @JvmField val CREATOR: Parcelable.Creator<RedditNews> = object : Parcelable.Creator<RedditNews> {
+            override fun createFromParcel(source: Parcel): RedditNews = RedditNews(source)
+            override fun newArray(size: Int): Array<RedditNews?> = arrayOfNulls(size)
+        }
     }
 
-    protected constructor(parcelIn: Parcel) : this(
-        parcelIn.readString(),
-        parcelIn.readString(),
-        mutableListOf<RedditNewsItem>().apply {
-            parcelIn.readTypedList(this, RedditNewsItem.CREATOR)
-        }
-    )
+    constructor(source: Parcel) : this(source.readString(), source.readString(), source.createTypedArrayList(RedditNewsItem.CREATOR))
 
     override fun writeToParcel(dest: Parcel?, flags: Int) {
         dest?.writeString(after)
@@ -39,21 +35,16 @@ data class RedditNewsItem(
     val numComments: Int,
     val created: Long,
     val thumbnail: String,
-    val url: String
+    val url: String?
 ) : ViewType , Parcelable {
     companion object {
-        @JvmField @Suppress("unused")
-        val CREATOR = createParcel { RedditNewsItem(it) }
+        @JvmField val CREATOR: Parcelable.Creator<RedditNewsItem> = object : Parcelable.Creator<RedditNewsItem> {
+            override fun createFromParcel(source: Parcel): RedditNewsItem = RedditNewsItem(source)
+            override fun newArray(size: Int): Array<RedditNewsItem?> = arrayOfNulls(size)
+        }
     }
 
-    protected constructor(parcelIn: Parcel) : this(
-        parcelIn.readString(),
-        parcelIn.readString(),
-        parcelIn.readInt(),
-        parcelIn.readLong(),
-        parcelIn.readString(),
-        parcelIn.readString()
-    )
+    constructor(source: Parcel) : this(source.readString(), source.readString(), source.readInt(), source.readLong(), source.readString(), source.readString())
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
         dest.writeString(author)
